@@ -86,5 +86,5 @@ if __name__ == "__main__":
     config.scan()
 
     app = config.make_wsgi_app()
-    server = make_server("0.0.0.0", 5000, app)
+    server = make_server("0.0.0.0", 8080, app)
     server.serve_forever()
