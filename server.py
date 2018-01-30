@@ -53,7 +53,7 @@ class PayloadView(object):
 
             title = issue['title']
 
-            if len(issue['title'].split(' ') issue['title']) > 1:
+            if len(issue['title'].split(' ')) > 1:
                 title = '-'.join(issue['title'].split(' '))
 
             new_branch = '%s-%s' % (
