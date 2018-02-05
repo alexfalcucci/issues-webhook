@@ -65,6 +65,10 @@ def payload():
             )
 
             s.send_commands(
+                'git branch -d %s' % new_branch
+            )
+
+            s.send_commands(
                 'git checkout -b %s' % new_branch
             )
 
