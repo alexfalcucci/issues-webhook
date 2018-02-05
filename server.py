@@ -25,11 +25,11 @@ def payload():
 
     action = payload['action']
     label = payload['label']
-    issue = payload['issue']
+    issue = payload.get('issue', '')
 
     # just create a new branch when the user assign
     # 'in progress' label into
-    if action == 'labeled' and label['name'] == 'in progress':
+    if issue and action == 'labeled' and label['name'] == 'in progress':
         s_name = 'github-webhook'
         s = Screen(s_name)
         if s.exists:
