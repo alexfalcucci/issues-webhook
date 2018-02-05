@@ -23,13 +23,13 @@ def payload():
     repo = os.environ['GHREPO']
 
 
-    action = payload['action']
+    action = payload.get('action', '')
     label = payload['label']
-    issue = payload.get('issue', '')
+    issue = payload['issue']
 
     # just create a new branch when the user assign
     # 'in progress' label into
-    if issue and action == 'labeled' and label['name'] == 'in progress':
+    if action and action == 'labeled' and label['name'] == 'in progress':
         s_name = 'github-webhook'
         s = Screen(s_name)
         if s.exists:
