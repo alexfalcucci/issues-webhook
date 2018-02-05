@@ -33,45 +33,42 @@ def payload():
         s_name = 'github-webhook'
         s = Screen(s_name)
         if s.exists:
-            s.kill()
 
-        s.initialize()
+            s.send_commands(
+                'cd %s' % workstation
+            )
 
-        s.send_commands(
-            'cd %s' % workstation
-        )
+            title = issue['title']
 
-        title = issue['title']
+            if len(issue['title'].split(' ')) > 1:
+                title = '-'.join(issue['title'].split(' '))
 
-        if len(issue['title'].split(' ')) > 1:
-            title = '-'.join(issue['title'].split(' '))
+            new_branch = '%s-%s' % (
+                issue['number'],
+                title
+            )
 
-        new_branch = '%s-%s' % (
-            issue['number'],
-            title
-        )
+            data = {
+                'repository': repo,
+                'username': os.environ['GHUSER'],
+                'password': os.environ['GHPWD'],
+                'default_b': 'hml',
+                'new_branch': new_branch
+            }
 
-        data = {
-            'repository': repo,
-            'username': os.environ['GHUSER'],
-            'password': os.environ['GHPWD'],
-            'default_b': 'hml',
-            'new_branch': new_branch
-        }
+            s.send_commands(
+                'git pull https://{username}:{password}@{repository} {default_b}'.format(**data)
+            )
 
-        s.send_commands(
-            'git pull https://{username}:{password}@{repository} {default_b}'.format(**data)
-        )
+            s.send_commands(
+                'git checkout %s' % data['default_b']
+            )
 
-        s.send_commands(
-            'git checkout %s' % data['default_b']
-        )
+            s.send_commands(
+                'git checkout -b %s' % new_branch
+            )
 
-        s.send_commands(
-            'git checkout -b %s' % new_branch
-        )
-
-        s.send_commands(
-            'git push https://{username}:{password}@{repository} {new_branch}'.format(**data)
-        )
+            s.send_commands(
+                'git push https://{username}:{password}@{repository} {new_branch}'.format(**data)
+            )
     return 'ok'
