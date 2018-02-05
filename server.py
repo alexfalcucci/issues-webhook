@@ -52,6 +52,10 @@ def payload():
         )
 
         s.send_commands(
+            'git pull && git checkout hml'
+        )
+
+        s.send_commands(
             'git checkout -b %s' % new_branch
         )
 
