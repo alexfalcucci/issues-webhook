@@ -51,20 +51,25 @@ def payload():
             title
         )
 
+        data = {
+            'repository': repo,
+            'username': os.environ['GHUSER'],
+            'password': os.environ['GHPWD'],
+            'default_b': 'hml',
+            'new_branch': new_branch
+        }
+
         s.send_commands(
-            'git pull && git checkout hml'
+            'git pull https://{username}:{password}@{repository} {default_b}'.format(**data)
+        )
+
+        s.send_commands(
+            'git checkout %s' % data['default_b']
         )
 
         s.send_commands(
             'git checkout -b %s' % new_branch
         )
-
-        data = {
-            'repository': repo,
-            'username': os.environ['GHUSER'],
-            'password': os.environ['GHPWD'],
-            'new_branch': new_branch
-        }
 
         s.send_commands(
             'git push https://{username}:{password}@{repository} {new_branch}'.format(**data)
