@@ -16,6 +16,7 @@ app = Flask(__name__)
 def up():
     return 'UP!'
 
+
 @app.route("/payload", methods=['POST'])
 def payload():
     payload = request.json
