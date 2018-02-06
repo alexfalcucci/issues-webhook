@@ -2,10 +2,6 @@ from __future__ import print_function
 
 import os
 
-# from wsgiref.simple_server import make_server
-# from pyramid.config import Configurator
-# from pyramid.view import view_config, view_defaults
-
 from screenutils import list_screens, Screen
 
 from flask import Flask, request
