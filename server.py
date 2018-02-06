@@ -16,6 +16,10 @@ app = Flask(__name__)
 # ./ngrok http 5000
 
 
+@app.route('/')
+def up():
+    return 'UP!'
+
 @app.route("/payload", methods=['POST'])
 def payload():
     payload = request.json
